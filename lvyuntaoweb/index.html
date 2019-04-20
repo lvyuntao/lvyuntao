@@ -1,5 +1,4 @@
-<!DOCTYPE HTML>
-<html>
+
 <style>
     body{
         width: 100%;
@@ -79,6 +78,26 @@
         font-size: 12px;
     }
     input:focus{outline:none;}
+    .loginbtn{
+        width: 200px;
+        height: 40px;
+        margin: auto;
+        margin-top: 40px;
+        display: block;
+        background-color: #fb8001;
+        border: 0px;
+        outline:none;
+        border-radius:25px;
+        font-weight: bold;
+        text-align: center;
+        color:white;
+        font-size: 16px;
+    }
+
+    .loginbtn:active{
+        background-color: #E47301;
+    }
+
 
 </style>
 <body>
@@ -87,7 +106,7 @@
         <div class="title">欢迎登录司机管理系统</div>
         <div class="ipt"><input placeholder=" 请输入管理员账号" ><img src="./img/userId.png" width="20" height="20"></div>
         <div class="ipt"><input type="password" placeholder=" 请输入密码" ><img src="./img/password.png" width="20" height="20"></div>
+        <button class="loginbtn">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
     </div>
 </div>
 </body>
-</html>
