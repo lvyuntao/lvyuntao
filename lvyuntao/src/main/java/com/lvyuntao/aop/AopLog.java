@@ -161,7 +161,6 @@ public class AopLog {
             return result;
         }
 
-
     }
 
 
@@ -217,5 +216,9 @@ public class AopLog {
         {
             pw.close();
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(String.valueOf(Long.MAX_VALUE).length());
     }
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+
+    <![endif]-->
+    <!--<link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />-->
+    <link href="static/h-ui.admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/h-ui.admin/css/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
+
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>审核页</title>
+</head>
+<body>
+
+<!--<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 审核中心 <span class="c-gray en">&gt;</span> 车辆审核 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>-->
+        <div><input class="form-control ds-input"></div>
+        <div id="mytab"></div>
+
+    <!--<table data-toggle="table">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>Item ID</th>-->
+            <!--<th>Item Name</th>-->
+            <!--<th>Item Price</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr>-->
+            <!--<td>1</td>-->
+            <!--<td>Item 1</td>-->
+            <!--<td>$1</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>2</td>-->
+            <!--<td>Item 2</td>-->
+            <!--<td>$2</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/bootstrap-table-zh-CN.min.js"></script>
+<script>
+    var mytable;
+    $(function () {
+        $('#mytab').bootstrapTable("destroy");
+        mytable= $('#mytab').bootstrapTable({
+            method : 'post',
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            url : "http://localhost:8080/Audit/getAuditInfoList",//请求路径
+            // striped : true, //是否显示行间隔色
+            pageNumber : 1, //初始化加载第一页
+            pagination : true,//是否分页
+            sidePagination : 'server',//server:服务器端分页|client：前端分页
+            pageSize :1,//单页记录数
+            pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+            // showRefresh : true,//刷新按钮
+            queryParams : function(params) {//上传服务器的参数
+                var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+                    pageSize : params.limit, // 每页显示数量
+                    // pageNo : params.offset, // SQL语句起始索引
+                    pageNo : (params.offset / params.limit) + 1, //当前页码
+                };
+
+                return temp;
+            },
+            columns : [
+                { title: '序号', field: "personId", visible: false, align: "center", width: 50 },
+                { title: '车牌', field: 'carId', /*visible: false,*/ width: 150, align: "center" },
+                { title: '身份证', field: 'idCard', /*visible: false,*/ width: 150,align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150 , align: "center"},
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150, align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150, align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150, align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150, align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150, align: "center" },
+                { title: '标题', field: 'title', /*visible: false,*/ width: 150 ,formatter: FormatOperate, align: "center"}
+            ],
+            responseHandler: function(res) {
+                return {
+                    "total": res.data.totalCount,//总页数
+                    "rows": res.data.list   //数据
+                };
+            },
+            onLoadSuccess: function (data) {
+                if(data.state==0&& data.data.list){
+
+                }
+            }
+        })
+    })
+
+    function FormatOperate(value, row, index) {
+        var templete = '<a  href="javascript:void(0)" title="查看" onclick="audit('+row.personId+')">审核</a>';
+        var view = '';
+        // if (row.flup_state != '1') {
+        //     view = templete.format("<i class='fa fa-eye'></i>审核", "SelectFlupRecordDet('" + row.personId + "')");
+        // }
+        return templete;
+    }
+    function audit(index){
+       alert(index)
+    }
+
+</script>
+</body>
+</html>

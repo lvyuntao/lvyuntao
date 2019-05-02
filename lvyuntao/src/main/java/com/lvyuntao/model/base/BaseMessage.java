@@ -1,18 +1,19 @@
 package com.lvyuntao.model.base;
 
+import com.lvyuntao.model.table.Admin;
 import lombok.Data;
 
 /**
  * Created by SF on 2019/3/24.
  */
 @Data
-public class BaseMessage {
+public class BaseMessage<T> {
     //状态
     private Integer state;
     //信息
     private String message;
     //主数据
-    private Object data;
+    private T data;
     //可能需要的附加数据
     private Object extra;
     //错误堆栈详情
@@ -23,10 +24,10 @@ public class BaseMessage {
      * @param data
      * @return
      */
-    public static BaseMessage success(Object data){
+    public static<T> BaseMessage<T> success(T data){
         return new BaseMessage(0,"成功",data,null,null);
     }
-    public static BaseMessage success(Object data,Object extra){
+    public static<T> BaseMessage<T> success(T data,Object extra){
         return new BaseMessage(0,"成功",data,extra,null);
     }
 
@@ -53,11 +54,15 @@ public class BaseMessage {
 
 
 
-    public BaseMessage(Integer state, String message, Object data, Object extra, Object messageDetail) {
+    public BaseMessage(Integer state, String message, T data, Object extra, Object messageDetail) {
         this.state = state;
         this.message = message;
         this.data = data;
         this.extra = extra;
         this.messageDetail = messageDetail;
     }
+    public BaseMessage<Admin> test(){
+        return BaseMessage.error(1,"");
+    }
+
 }

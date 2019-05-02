@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by SF on 2019/3/24.
  */
-@Api(tags="TEST")
+@Api(tags="登录接口")
 @RequestMapping("/Login")
 @RestController
 public class LoginApi {
